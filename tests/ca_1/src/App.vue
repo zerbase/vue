@@ -4,6 +4,7 @@
     <div @click="모달창열렸니 = false" class="white-bg">
       <h4>상세페이지임</h4>
       <p>상세페이지 내용임</p>
+      <button @click="모달창열렸니 = false">닫기</button>
     </div>
   </div>
 
@@ -12,23 +13,23 @@
     <a v-for="(item, a) in 메뉴들" :key="a">{{a}}. {{item}}</a>
   </div>
 
-  <div v-for="(item, a) in products" :key="a"> 
-    <img :src="imgName[a]" class="room-img">
-    <h4 @click="모달창열렸니 = true">{{products[a]}}</h4>
-    <p>{{prices[a]}} 만원</p>
-    <button @click="increase(a)">허위매물신고</button> <span> 신고수 : {{신고수[a]}}</span>
+  <div v-for="(item, a) in 원룸들" :key="a"> 
+    <img :src="원룸들[a].image" class="room-img">
+    <h4 @click="모달창열렸니 = true">{{원룸들[a].title}}</h4>
+    <p>{{원룸들[a].price}} 만원</p>
+    <!-- <button @click="increase(a)">허위매물신고</button> <span> 신고수 : {{신고수[a]}}</span> -->
     <!-- v-on:click -->
   </div>
 </template>
 
 <script>
-
-
+import data from './assets/oneroom'
 
 export default {
   name: 'App',
   data(){
     return {
+      원룸들 : data,
       모달창열렸니: false,
       imgName : [ require("./assets/room0.jpg"),
                   require("./assets/room1.jpg"),
