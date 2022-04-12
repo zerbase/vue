@@ -2,7 +2,7 @@
   <div>
     <div class="main list-container contents">
       <h1 class="page-header">Today I Learned</h1>
-      <LoadingSpinner v-if="isLoding"></LoadingSpinner>
+      <LoadingSpinner v-if="isLoading"></LoadingSpinner>
       <ul v-else>
         <PostListItem
           v-for="postItem in postItems"
@@ -18,6 +18,7 @@
 import PostListItem from '@/components/posts/PostListItem.vue';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import { fetchPosts } from '@/api/index';
+
 export default {
   components: {
     PostListItem,
@@ -26,15 +27,14 @@ export default {
   data() {
     return {
       postItems: [],
-      isLoding: false,
+      isLoading: false,
     };
   },
   methods: {
     async fetchData() {
-      this.isLoding = true;
+      this.isLoading = true;
       const { data } = await fetchPosts();
-      this.isLoding = false;
-      // console.log(data.posts);
+      this.isLoading = false;
       this.postItems = data.posts;
     },
   },
