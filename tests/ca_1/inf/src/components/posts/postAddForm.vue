@@ -9,9 +9,12 @@
         </div>
         <div>
           <label for="contents">Contents:</label>
-          <textarea id="contents" type="text" v-model="contents" rows="5" />
-          <p v-if="!isContentsValid" class="validation-text warning">
-            Contents must be less than 200
+          <textarea id="contents" type="text" rows="5" v-model="contents" />
+          <p
+            v-if="!isContentsValid"
+            class="validation-text warning isContentTooLong"
+          >
+            Contents length must be less than 250
           </p>
         </div>
         <button type="submit" class="btn">Create</button>
@@ -24,7 +27,8 @@
 </template>
 
 <script>
-import { createPost } from '@/api/index';
+import { createPost } from '@/api/posts';
+
 export default {
   data() {
     return {
@@ -45,6 +49,7 @@ export default {
           title: this.title,
           contents: this.contents,
         });
+        this.$router.push('/main');
         console.log(response);
       } catch (error) {
         console.log(error.response.data.message);
@@ -59,7 +64,6 @@ export default {
 .form-wrapper .form {
   width: 100%;
 }
-
 .btn {
   color: white;
 }
