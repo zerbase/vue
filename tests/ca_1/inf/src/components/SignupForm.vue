@@ -6,6 +6,11 @@
           <label for="username">id: </label>
           <input id="username" type="text" v-model="username" />
         </div>
+        <p class="validation-text">
+          <span class="warning" v-if="!isUsernameValid && username">
+            Please enter an email address
+          </span>
+        </p>
         <div>
           <label for="password">pw: </label>
           <input id="password" type="text" v-model="password" />
@@ -14,7 +19,16 @@
           <label for="nickname">nickname: </label>
           <input id="nickname" type="text" v-model="nickname" />
         </div>
-        <button type="submit" class="btn">회원 가입</button>
+        <button
+          :disabled="!isUsernameValid || !password || !nickname"
+          type="submit"
+          class="btn"
+          :class="
+            !isUsernameValid || !password || !nickname ? 'disabled' : null
+          "
+        >
+          회원 가입
+        </button>
       </form>
       <p class="log">{{ logMessage }}</p>
     </div>
@@ -23,6 +37,7 @@
 
 <script>
 import { registerUser } from '@/api/auth';
+import { validateEmail } from '@/utils/validation';
 
 export default {
   data() {
@@ -34,6 +49,11 @@ export default {
       // log
       logMessage: '',
     };
+  },
+  computed: {
+    isUsernameValid() {
+      return validateEmail(this.username);
+    },
   },
   methods: {
     async submitForm() {
